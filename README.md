@@ -16,3 +16,5 @@
 - differential bundeling - supports older browsers
 - diagnostic
 - error handeling
+- HTTPS
+- Tree Shaking - remove unused code
