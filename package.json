@@ -1,0 +1,22 @@
+{
+  "name": "react-again",
+  "version": "1.0.0",
+  "description": "\"This is react learning phase again!\"",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranjeetkumar274/React-Again.git"
+  },
+  "author": "Ashu Yadav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranjeetkumar274/React-Again/issues"
+  },
+  "homepage": "https://github.com/ranjeetkumar274/React-Again#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
