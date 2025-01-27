@@ -1,0 +1,31 @@
+{
+  "name": "react-again",
+  "version": "1.0.0",
+  "description": "We are learning React",
+  "keywords": [
+    "None"
+  ],
+  "homepage": "https://github.com/ranjeetkumar274/React-Again#readme",
+  "bugs": {
+    "url": "https://github.com/ranjeetkumar274/React-Again/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranjeetkumar274/React-Again.git"
+  },
+  "license": "ISC",
+  "author": "Ashu Yadav",
+  "type": "commonjs",
+  "main": "App.js",
+  "scripts": {
+    "start": "npx parcel index.html",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
