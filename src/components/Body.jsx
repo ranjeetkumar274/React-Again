@@ -1,31 +1,42 @@
-import {RestaurantCard} from "../components/RestaurantCard.jsx";
-import { useEffect, useState } from "react";
-import Shimmer from "./Shimmer.jsx";
+// Importing necessary modules and components
 
+import {RestaurantCard} from "../components/RestaurantCard.jsx"; // Importing RestaurantCard component
+import { useEffect, useState } from "react";  // Importing useEffect and useState hooks from React
+import Shimmer from "./Shimmer.jsx"; // Importing Shimmer component for loading state
+
+
+// Body component definition
 const Body = () => {
-    const [listofRestaurants, setlistofRestaurants] = useState([]);
-    const [searchtext, setsearchtext] = useState("");
+        // State variables
+    const [listofRestaurants, setlistofRestaurants] = useState([]); // State to store the list of restaurants
+    const [filteredRestaurants, setfilteredRestaurants] = useState([]); // State to store the filtered list of restaurants
+    const [searchtext, setsearchtext] = useState("");  // State to store the search text
 
     // Whenever state variable updates , react triggers a reconciliation cycling(re-renders the components)
-
+       // useEffect hook to fetch data when the component mounts
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData(); // Fetch data from the API
+    }, []); // Empty dependency array means this effect runs only once after the initial render
 
+
+    // Function to fetch data from the API
     const fetchData = async () => {
         try { 
+            // Fetching data from the Swiggy API
             const res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.87560&lng=80.91150&collection=83633&tags=layout_CCS_NorthIndian&sortBy=&filters=&type=rcv2&offset=0&page_type=null");
-            const data = await res.json();
-            console.log(data);
+            const data = await res.json(); // Parsing the JSON response
+            console.log(data); // Logging the data for debugging purposes
 
-            // optional chaining operator
+            // Extracting restaurant cards from the API response using optional chaining
             const restaurantCards = data?.data?.cards.slice(3, 10)
                 .map(card => card?.card?.card);
                 
-            setlistofRestaurants(restaurantCards);
+                // Updating state variables with the fetched data
+            setlistofRestaurants(restaurantCards); // Setting the list of restaurants
+            setfilteredRestaurants(restaurantCards); // Setting the filtered list of restaurants
         }
         catch (error) {
-            console.error("Error fetching data:", error);
+            console.error("Error fetching data:", error); // Logging any errors that occur during the fetch operation
         }
     };
 
@@ -46,11 +57,17 @@ const Body = () => {
                     onChange={(e) => {
                         setsearchtext(e.target.value);
                         console.log(e.target.value);
+                        const filteredListofrestaurants = listofRestaurants.filter((res) =>res.info.name.toLowerCase().includes(searchtext.toLowerCase())
+                    );
+                        setfilteredRestaurants(filteredListofrestaurants);
                     }}/>
-                    <button className="search-btn" onClick={() => {
-                        console.log({searchtext})
-                    }}>Search</button>
 
+                     {/* Button to filter restaurants based on search text */}
+                    <button className="search-btn" onClick={() => {
+                        const filteredListofrestaurants = listofRestaurants.filter((res) =>res.info.name.toLowerCase().includes(searchtext.toLowerCase())
+                    );
+                        setfilteredRestaurants(filteredListofrestaurants);
+                    }}>Search</button>
 
                 </div>
                 <button className="filter-btn" onClick={() => {
@@ -62,8 +79,10 @@ const Body = () => {
                     Top Rated Restaurants
                 </button>
             </div>
+
+            {/* Rendering the list of restaurant cards */}
             <div className="res-container">
-                {Array.isArray(listofRestaurants) && listofRestaurants.map((restaurant) => (
+                {Array.isArray(filteredRestaurants) && filteredRestaurants.map((restaurant) => (
                     <RestaurantCard 
                         key={restaurant?.info?.id} 
                         resData={restaurant}
@@ -74,4 +93,4 @@ const Body = () => {
     );
 };
 
-export default Body;
+export default Body; // Exporting the Body component as default
