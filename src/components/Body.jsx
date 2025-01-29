@@ -1,8 +1,12 @@
 import {RestaurantCard} from "../components/RestaurantCard.jsx";
 import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer.jsx";
 
 const Body = () => {
     const [listofRestaurants, setlistofRestaurants] = useState([]);
+    const [searchtext, setsearchtext] = useState("");
+
+    // Whenever state variable updates , react triggers a reconciliation cycling(re-renders the components)
 
     useEffect(() => {
         fetchData();
@@ -13,6 +17,8 @@ const Body = () => {
             const res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.87560&lng=80.91150&collection=83633&tags=layout_CCS_NorthIndian&sortBy=&filters=&type=rcv2&offset=0&page_type=null");
             const data = await res.json();
             console.log(data);
+
+            // optional chaining operator
             const restaurantCards = data?.data?.cards.slice(3, 10)
                 .map(card => card?.card?.card);
                 
@@ -25,12 +31,28 @@ const Body = () => {
 
     // Early return if no restaurants
     if(listofRestaurants.length === 0) {
-        return <h2>Loading...</h2>;
+        return <Shimmer />;
     }
 
+    // otherwise, return the list of restaurants
     return(
         <div className="body">
             <div className="filter">
+
+                {/* Search Button */}
+                <div className="search">
+                    <input type="text" className="search-box" 
+                    value={searchtext}
+                    onChange={(e) => {
+                        setsearchtext(e.target.value);
+                        console.log(e.target.value);
+                    }}/>
+                    <button className="search-btn" onClick={() => {
+                        console.log({searchtext})
+                    }}>Search</button>
+
+
+                </div>
                 <button className="filter-btn" onClick={() => {
                     const filteredList = listofRestaurants.filter(
                         (res) => res.info.avgRating >= 4.5
