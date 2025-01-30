@@ -22,8 +22,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@parcel/transformer-js": "^2.13.3",
+    "parcel": "^2.13.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.28.2"
   },
   "devDependencies": {
     "process": "^0.11.10"

@@ -3,6 +3,7 @@
 import {RestaurantCard} from "../components/RestaurantCard.jsx"; // Importing RestaurantCard component
 import { useEffect, useState } from "react";  // Importing useEffect and useState hooks from React
 import Shimmer from "./Shimmer.jsx"; // Importing Shimmer component for loading state
+import { Link } from "react-router-dom";
 
 
 // Body component definition
@@ -25,7 +26,6 @@ const Body = () => {
             // Fetching data from the Swiggy API
             const res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.87560&lng=80.91150&collection=83633&tags=layout_CCS_NorthIndian&sortBy=&filters=&type=rcv2&offset=0&page_type=null");
             const data = await res.json(); // Parsing the JSON response
-            console.log(data); // Logging the data for debugging purposes
 
             // Extracting restaurant cards from the API response using optional chaining
             const restaurantCards = data?.data?.cards.slice(3, 10)
@@ -74,7 +74,7 @@ const Body = () => {
                     const filteredList = listofRestaurants.filter(
                         (res) => res.info.avgRating >= 4.5
                     );
-                    setlistofRestaurants(filteredList);
+                    setfilteredRestaurants(filteredList);
                 }}>
                     Top Rated Restaurants
                 </button>
@@ -83,14 +83,15 @@ const Body = () => {
             {/* Rendering the list of restaurant cards */}
             <div className="res-container">
                 {Array.isArray(filteredRestaurants) && filteredRestaurants.map((restaurant) => (
+                    <Link key={restaurant?.info?.id} to={`/restaurants/${restaurant?.info?.id}`}>
                     <RestaurantCard 
-                        key={restaurant?.info?.id} 
                         resData={restaurant}
-                    />
+                    /></Link>
+                    
                 ))}
             </div>
         </div>
     );
 };
 
-export default Body; // Exporting the Body component as default
+export default Body; // Exporting the Body component as default 
