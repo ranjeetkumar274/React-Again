@@ -4,6 +4,7 @@ import {RestaurantCard} from "../components/RestaurantCard.jsx"; // Importing Re
 import { useEffect, useState } from "react";  // Importing useEffect and useState hooks from React
 import Shimmer from "./Shimmer.jsx"; // Importing Shimmer component for loading state
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus.jsx";
 
 
 // Body component definition
@@ -12,6 +13,9 @@ const Body = () => {
     const [listofRestaurants, setlistofRestaurants] = useState([]); // State to store the list of restaurants
     const [filteredRestaurants, setfilteredRestaurants] = useState([]); // State to store the filtered list of restaurants
     const [searchtext, setsearchtext] = useState("");  // State to store the search text
+    const online = useOnlineStatus();
+    
+
 
     // Whenever state variable updates , react triggers a reconciliation cycling(re-renders the components)
        // useEffect hook to fetch data when the component mounts
@@ -39,6 +43,10 @@ const Body = () => {
             console.error("Error fetching data:", error); // Logging any errors that occur during the fetch operation
         }
     };
+
+    
+    if(online === false) return <h1>Looks like you are disconnected from Internet!!! Please Check Your Internet!!</h1>
+    
 
     // Early return if no restaurants
     if(listofRestaurants.length === 0) {
