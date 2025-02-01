@@ -16,7 +16,6 @@
   "license": "ISC",
   "author": "Ashu Yadav",
   "type": "commonjs",
-  "main": "App.js",
   "scripts": {
     "start": "npx parcel index.html",
     "build": "parcel build index.html --dist-dir dist",
