@@ -18,7 +18,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "npx parcel index.html",
-    "build": "parcel build index.html --dist-dir dist",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "dependencies": {
