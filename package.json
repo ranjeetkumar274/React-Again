@@ -19,6 +19,7 @@
   "main": "App.js",
   "scripts": {
     "start": "npx parcel index.html",
+    "build": "parcel build index.html --dist-dir dist",
     "test": "jest"
   },
   "dependencies": {
