@@ -5,7 +5,7 @@
   "keywords": [
     "None"
   ],
-  "homepage": "https://github.com/ranjeetkumar274/React-Again#readme",
+  "homepage": "https://ranjeetkumar274.github.io/React-Again",
   "bugs": {
     "url": "https://github.com/ranjeetkumar274/React-Again/issues"
   },
@@ -17,9 +17,9 @@
   "author": "Ashu Yadav",
   "type": "commonjs",
   "scripts": {
-    "start": "npx parcel index.html",
-    "build": "parcel build index.html",
-    "test": "jest",
+    "start": "parcel index.html",
+    "build": "parcel build index.html --public-url /React-Again/",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
