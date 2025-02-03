@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import FoodSoodLogo from "../utils/FoodSood.png";
 
 const Header = () => {
 
@@ -8,12 +9,12 @@ const Header = () => {
     const online = useOnlineStatus();
 
     return(
-        <div className="header">
+        <div className="flex justify-between bg-red-200">
             <div className="logo-container">
-                <img className="logo" src="https://th.bing.com/th/id/OIP.xRrzWLm-NnuaLrJShnaPsAHaHa?rs=1&pid=ImgDetMain"></img>
+                <img className="w-32 ml-20"src={FoodSoodLogo} ></img>
             </div>
-            <div className="nav-items">
-                <ul>
+            <div className="flex items-center">
+                <ul className="flex p-10 space-x-10">
                     <li>
                         Online Status : {online ? "✅" : "❌" }
                     </li>

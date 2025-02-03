@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";  // Importing useEffect and useStat
 import Shimmer from "./Shimmer.jsx"; // Importing Shimmer component for loading state
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus.jsx";
+import { RES_API } from "../utils/constants.jsx";
 
 
 // Body component definition
@@ -28,7 +29,7 @@ const Body = () => {
     const fetchData = async () => {
         try { 
             // Fetching data from the Swiggy API
-            const res = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.87560&lng=80.91150&collection=83633&tags=layout_CCS_NorthIndian&sortBy=&filters=&type=rcv2&offset=0&page_type=null");
+            const res = await fetch(RES_API); // Fetching data from the API
             const data = await res.json(); // Parsing the JSON response
 
             // Extracting restaurant cards from the API response using optional chaining
@@ -56,11 +57,12 @@ const Body = () => {
     // otherwise, return the list of restaurants
     return(
         <div className="body">
-            <div className="filter">
+            <div className="flex items-center justify-center bg-red-300">
+                
 
                 {/* Search Button */}
-                <div className="search">
-                    <input type="text" className="search-box" 
+                <div className="search m-4 p-4 gap-6">
+                    <input type="text" className=" border-none w-80 h-10 m-4" 
                     value={searchtext}
                     onChange={(e) => {
                         setsearchtext(e.target.value);
@@ -71,14 +73,15 @@ const Body = () => {
                     }}/>
 
                      {/* Button to filter restaurants based on search text */}
-                    <button className="search-btn" onClick={() => {
+                    <button className="px-4 py-2 bg-green-100 " onClick={() => {
                         const filteredListofrestaurants = listofRestaurants.filter((res) =>res.info.name.toLowerCase().includes(searchtext.toLowerCase())
                     );
                         setfilteredRestaurants(filteredListofrestaurants);
                     }}>Search</button>
-
                 </div>
-                <button className="filter-btn" onClick={() => {
+
+                <div className="search m-4 p-4 flex items-center">
+                <button className="px-4 py-2 bg-gray-100 rounded-lg" onClick={() => {
                     const filteredList = listofRestaurants.filter(
                         (res) => res.info.avgRating >= 4.5
                     );
@@ -86,18 +89,28 @@ const Body = () => {
                 }}>
                     Top Rated Restaurants
                 </button>
+                </div>
             </div>
 
             {/* Rendering the list of restaurant cards */}
-            <div className="res-container">
-                {Array.isArray(filteredRestaurants) && filteredRestaurants.map((restaurant) => (
-                    <Link key={restaurant?.info?.id} to={`/restaurants/${restaurant?.info?.id}`}>
-                    <RestaurantCard 
-                        resData={restaurant}
-                    /></Link>
-                    
-                ))}
-            </div>
+                <div className="flex flex-wrap justify-center items-center bg-red-300 ">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"> 
+                    {Array.isArray(filteredRestaurants) && filteredRestaurants.map((restaurant) => (
+                        <Link key={restaurant?.info?.id} to={`/restaurants/${restaurant?.info?.id}`}>
+                        <RestaurantCard 
+                            resData={restaurant}
+                        /></Link>
+                        
+                    ))}
+                    {Array.isArray(filteredRestaurants) && filteredRestaurants.map((restaurant) => (
+                        <Link key={restaurant?.info?.id} to={`/restaurants/${restaurant?.info?.id}`}>
+                        <RestaurantCard 
+                            resData={restaurant}
+                        /></Link>
+                        
+                    ))}
+                    </div>
+                </div>
         </div>
     );
 };

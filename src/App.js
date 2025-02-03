@@ -1,4 +1,5 @@
 import React from "react";
+import { lazy , Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -7,11 +8,10 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaaurantMenu";
 import {
-    createBrowserRouter,
+    createHashRouter,  // Changed from createBrowserRouter
     Outlet,
     RouterProvider,
-  } from "react-router-dom"; // Try this if it works
-  
+} from "react-router-dom";
 
 const AppLayout = () => {
     return (
@@ -22,39 +22,40 @@ const AppLayout = () => {
     );
 };
 
-const appRouter = createBrowserRouter([
+const lazyAbout = lazy(() => import("./components/About"));
+
+const appRouter = createHashRouter([  // Changed from createBrowserRouter
     {
-        path: "/", // Home route
-        element: <AppLayout />, // Render the AppLayout component
-        errorElement: <Error />,// //  // Render the Error component
-        children:
-            [
-                {
-                    path: "/", // Body route
-                    element: <Body /> // Render the Body component
-                },
-                {
-                    path: "/about", // About route
-                    element: <About /> // Render the About component
-                },
-                {
-                    path: "*", // Error route
-                    element: <Error /> // Render the Error component
-                },
-                {  
-                    path: "/contact", // Contact route  
-                    element: <Contact /> // Render the Contact component      
-                },
-                {
-                    path: "/restaurants/:resId", // :resId is a URL parameter
-                    element: <RestaurantMenu /> // Render the RestaurantMenu component
-                }
-            ]
+        path: "/",
+        element: <AppLayout />,
+        errorElement: <Error />,
+        children: [
+            {
+                path: "/",
+                element: <Body />
+            },
+            {
+                path: "/about",
+                element: <Suspense fallback={<div>Loading...</div>}>
+                    <About />
+                </Suspense>
+            },
+            {
+                path: "/contact",
+                element: <Contact />
+            },
+            {
+                path: "/restaurants/:resId",
+                element: <RestaurantMenu />
+            },
+            {
+                path: "*",
+                element: <Error />
+            }
+        ]
     },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(
-    <RouterProvider router={appRouter} />
-);
+root.render(<RouterProvider router={appRouter} />);
