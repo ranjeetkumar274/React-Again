@@ -9,7 +9,7 @@ const Header = () => {
     const online = useOnlineStatus();
 
     return(
-        <div className="flex justify-between bg-red-200">
+        <div className="flex justify-between bg-red-200 shadow-md">
             <div className="logo-container">
                 <img className="w-32 ml-20"src={FoodSoodLogo} ></img>
             </div>

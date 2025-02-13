@@ -6,6 +6,7 @@ import Shimmer from "./Shimmer.jsx"; // Importing Shimmer component for loading 
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus.jsx";
 import { RES_API } from "../utils/constants.jsx";
+import { withPromotedLabel } from "../components/RestaurantCard.jsx";
 
 
 // Body component definition
@@ -15,6 +16,7 @@ const Body = () => {
     const [filteredRestaurants, setfilteredRestaurants] = useState([]); // State to store the filtered list of restaurants
     const [searchtext, setsearchtext] = useState("");  // State to store the search text
     const online = useOnlineStatus();
+    const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
     
 
 
@@ -83,7 +85,7 @@ const Body = () => {
                 <div className="search m-4 p-4 flex items-center">
                 <button className="px-4 py-2 bg-gray-100 rounded-lg" onClick={() => {
                     const filteredList = listofRestaurants.filter(
-                        (res) => res.info.avgRating >= 4.5
+                        (res) => res.info.avgRating >= 4.0
                     );
                     setfilteredRestaurants(filteredList);
                 }}>
@@ -104,9 +106,10 @@ const Body = () => {
                     ))}
                     {Array.isArray(filteredRestaurants) && filteredRestaurants.map((restaurant) => (
                         <Link key={restaurant?.info?.id} to={`/restaurants/${restaurant?.info?.id}`}>
+                        {restaurant.info.promoted ? ( <PromotedRestaurantCard resData={restaurant}/> ) : (
                         <RestaurantCard 
                             resData={restaurant}
-                        /></Link>
+                        /> )} </Link>
                         
                     ))}
                     </div>

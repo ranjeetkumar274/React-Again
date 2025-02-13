@@ -7,7 +7,7 @@ class UserClass extends React.Component{
 
         this.state = {
             userInfo:{
-                name: "Dummy",
+                name: "Author",
                 location: "default",
                 login: ""
             },
@@ -34,12 +34,12 @@ class UserClass extends React.Component{
 
 
         return(
-            <div className="user-card">
-                <img src={avatar_url} className="avatar" />
+            <div className="w-[290px] h-[400px] rounded-lg p-4 m-4 flex flex-col items-center bg-red-200">
+                <img src={avatar_url} className="w-100 h-[220px] rounded-[50%] pb-6" />
                 <div className="user-details">
-                <h2 >Name : {name}</h2>
-                <h3>Location : {location}</h3>
-                <h4>Contact : @{login}</h4>
+                <h2 className="text-center pb-2 text-xl font-bold">{name}</h2>
+                <h3 className="text-center pb-2 text-slate-700">Contributor</h3>
+                <h4 className="text-slate-800">Linkedin : @{login}</h4>
                 </div>
             </div>
         );

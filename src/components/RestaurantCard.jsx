@@ -8,7 +8,7 @@ export const RestaurantCard = ({resData}) =>{
     } = resData?.info;
 
     return(
-        <div className="m-4 p-4 w-[250px] h-[420px] bg-gray-200 rounded-lg hover:shadow-lg hover:bg-gray-3 00">
+        <div className="m-4 p-4 w-[270px] h-[420px] bg-gray-200 rounded-lg hover:shadow-lg hover:bg-gray-3 00">
             <img 
                 className="rounded-lg h-[200px] w-full object-cover" 
                 src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`}  // Modified image URL
@@ -24,4 +24,16 @@ export const RestaurantCard = ({resData}) =>{
         </div>
         
     )
+};
+
+
+export const withPromotedLabel = (RestaurantCard) =>  {
+    return (props) => {
+        return(
+            <div className="relative">
+                <label className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-lg">Promoted</label>
+                <RestaurantCard {...props}/>
+            </div>
+        );
+    };  
 };
